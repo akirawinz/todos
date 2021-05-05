@@ -1,5 +1,5 @@
 import { Checkbox, Row, Col } from 'antd';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import CardTodo from '@/components/CardTodo';
 import FormTodo from '@/components/FormTodo';
 import CardTotal from '@/components/CardTotal';
@@ -12,14 +12,13 @@ import { TodoProps } from '@/types/index';
 
 export default function Home() {
   const [todoList, setTodoList] = useRecoilState(todoListState);
-  const [isComplete, setIsComplete] = useRecoilState(isCompleteState);
-  const [isInComplete, setIsInComplete] = useRecoilState(isInCompleteState);
+  const setIsComplete = useSetRecoilState(isCompleteState);
+  const setIsInComplete = useSetRecoilState(isInCompleteState);
 
   const onAdd = (todo: TodoProps): void => {
     setTodoList([...todoList, todo]);
   };
   const onChange = (checkedValues: any): void => {
-    console.log(checkedValues, typeof checkedValues);
     if (checkedValues.includes('completed')) {
       setIsComplete(true);
     } else {

@@ -18,9 +18,3 @@ export interface FormEditProps {
   todo: TodoProps;
   mapNewData: (todo: TodoProps, type: string, value: string) => void;
 }
-
-export type MapNewDataProps = {
-  todo: TodoProps;
-  type: string;
-  value: string;
-};

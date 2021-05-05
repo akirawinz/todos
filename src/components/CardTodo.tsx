@@ -1,40 +1,25 @@
-import { Card } from 'antd';
-import _ from 'lodash';
-import {
-  todoListState,
-  isModalVisibleState,
-  searchState,
-  todoListOrSearchState,
-} from '@/components/State';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { TodoProps } from '@/types/index';
-import { useState } from 'react';
-
+import _ from "lodash";
+import { Card } from "antd";
+import { useState } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { TodoProps } from "@/types/index";
+import FormEditTodo from "@/components/FormEditTodo";
 import {
   EditOutlined,
   DeleteOutlined,
   CheckSquareOutlined,
-} from '@ant-design/icons';
-import FormEditTodo from '@/components/FormEditTodo';
+} from "@ant-design/icons";
+import {
+  todoListState,
+  isModalVisibleState,
+  todoListOrSearchState,
+} from "@/components/State";
 
 const CardTodo = () => {
   const [todoList, setTodoList] = useRecoilState(todoListState);
-  const todoListOrSearch = useRecoilValue(todoListOrSearchState);
   const [modalContent, setModalContent] = useState<JSX.Element>();
-  const [isModalVisible, setIsModalVisible] = useRecoilState(
-    isModalVisibleState
-  );
-  const [search, setSearch] = useRecoilState(searchState);
-  let data: TodoProps[];
-
-  if (search) {
-    const temp = _.cloneDeep(todoList);
-    data = temp.filter((data) => {
-      return data.value.includes(search);
-    });
-  } else {
-    data = todoList;
-  }
+  const todoListOrSearch = useRecoilValue(todoListOrSearchState);
+  const setIsModalVisible = useSetRecoilState(isModalVisibleState);
 
   const onHandleDelete = (todo: TodoProps): void => {
     const temp = _.cloneDeep(todoList);
@@ -56,7 +41,7 @@ const CardTodo = () => {
     const temp = _.cloneDeep(todoList);
     const newData: TodoProps[] = temp.map((data) => {
       switch (type) {
-        case 'isDone':
+        case "isDone":
           if (data.id === todo.id) {
             return { ...data, isDone: !data.isDone };
           }
@@ -68,15 +53,9 @@ const CardTodo = () => {
             data.value = newValue;
           }
           return data;
-          break;
       }
     });
     setTodoList(newData);
-    // setSearch('');
-    // console.log(search, 'set');
-  };
-  const showModal = () => {
-    setIsModalVisible(true);
   };
 
   const { Meta } = Card;
@@ -87,11 +66,11 @@ const CardTodo = () => {
           return (
             <Card
               key={todo.id}
-              className={`my-4 ${todo.isDone ? 'bg-green-500' : ''}`}
+              className={`my-4 ${todo.isDone ? "bg-green-500" : ""}`}
               actions={[
                 <CheckSquareOutlined
                   key="check"
-                  onClick={() => mapNewData(todo, 'isDone', '')}
+                  onClick={() => mapNewData(todo, "isDone", "")}
                 />,
                 <EditOutlined
                   key="edit"
@@ -114,7 +93,7 @@ const CardTodo = () => {
       </>
     );
   } else {
-    return <p></p>;
+    return <p>no result</p>;
   }
 };
 export default CardTodo;

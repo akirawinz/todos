@@ -1,5 +1,5 @@
-import { todoListOrSearchState } from '@/components/State';
-import { useRecoilValue } from 'recoil';
+import { todoListOrSearchState } from "@/components/State";
+import { useRecoilValue } from "recoil";
 const CardTotal = () => {
   const todoListOrSearch = useRecoilValue(todoListOrSearchState);
   return (
